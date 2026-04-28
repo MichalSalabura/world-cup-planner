@@ -1,3 +1,15 @@
-* {
-    margin: none;
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+}
+
+.ms_appContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.ms_pageContent {
+    flex: 1;
 }

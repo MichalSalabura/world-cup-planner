@@ -1,0 +1,15 @@
+.ms_headerContainer {
+    background-color: yellow;
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ms_countryList {
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    list-style: none;
+    font-size: 30px;
+}

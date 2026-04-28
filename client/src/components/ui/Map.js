@@ -40,7 +40,7 @@ const Map = () => {
 
     return (
         <GoogleMap
-            mapContainerStyle={{ width: "100%", height: "500px" }}
+            mapContainerStyle={{ width: "100%", height: "100%" }}
             center={{ lat: 53.3498, lng: -6.2603 }}
             zoom={12}
         />
