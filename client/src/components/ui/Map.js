@@ -8,7 +8,7 @@ const POI_COLORS = {
         "http://maps.google.com/mapfiles/ms/icons/green-dot.png",
 };
 
-const Map = ({ country, currentStadium, pois, fetchPlaces }) => {
+const Map = ({ country, currentStadium, pois, fetchPlaces, activeFilters }) => {
     const mapDivRef = useRef(null);
     const mapInstanceRef = useRef(null);
     const stadiumMarkersRef = useRef([]);
@@ -90,7 +90,7 @@ const Map = ({ country, currentStadium, pois, fetchPlaces }) => {
         poiMarkersRef.current.forEach((m) => m.setMap(null));
         poiMarkersRef.current = [];
 
-        pois.forEach((poi) => {
+        pois.filter((poi) => activeFilters[poi.category]).forEach((poi) => {
             const marker = new window.google.maps.Marker({
                 position: {
                     lat: poi.geometry.location.lat(),
@@ -114,9 +114,9 @@ const Map = ({ country, currentStadium, pois, fetchPlaces }) => {
 
             poiMarkersRef.current.push(marker);
         });
-    }, [pois, mapReady]);
+    }, [pois, mapReady, activeFilters]);
 
-    return <div ref={mapDivRef} style={{ width: "100%", height: "100%" }} />;
+    return <div ref={mapDivRef} className="ms_map"/>;
 };
 
 export default Map;

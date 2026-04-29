@@ -1,0 +1,18 @@
+.ms_filtersContainer {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.ms_filterButton {
+    background-color: lightgray;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.ms_filterButton:hover {
+    cursor: pointer;
+}
+
+.ms_filterActive {
+    background-color: gray;
+}

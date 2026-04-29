@@ -6,11 +6,18 @@
 #ms_mapContainer {
     padding: 10px;
     width: 50%;
-    height: calc(100vh - 120px);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
 .ms_stadiumCardsContainer {
     width: 50%;
     height: calc(100vh - 120px);
     overflow: scroll;
+}
+
+.ms_map {
+    width: 100%;
+    height: 100%;
 }
