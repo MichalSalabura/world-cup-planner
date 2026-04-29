@@ -1,9 +1,14 @@
 .ms_container {
     height: 100%;
+    display: flex;
 }
 
 #ms_mapContainer {
     padding: 10px;
     width: 50%;
     height: calc(100vh - 120px);
+}
+
+.ms_stadiumCardsContainer {
+    width: 50%;
 }
