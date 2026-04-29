@@ -1,7 +1,7 @@
 import React from "react";
 import stadiums from "../../data/stadiums.json";
 import StadiumCard from "./StadiumCard";
-import "../../styles/Stadiums.css";
+import "../../css/Stadiums.css";
 
 const Stadiums = ({ chosenCountry, setCurrentStadium }) => {
     const filteredStadiums = stadiums.stadiums.filter(

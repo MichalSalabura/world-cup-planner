@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Home } from "./pages/Home.js";
 import Header from "./components/layout/Header.js";
-import "./styles/App.css";
+import "./css/App.css";
 
 export const App = (props) => {
     const [country, setCountry] = useState("USA");

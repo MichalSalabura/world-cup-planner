@@ -4,7 +4,7 @@ import Map from "../components/ui/Map";
 import Stadiums from "../components/ui/Stadiums";
 import Filters from "../components/ui/Filters";
 import usePlaces from "../hooks/usePlaces";
-import "../styles/Home.css";
+import "../css/Home.css";
 
 export const Home = ({ currentCountry }) => {
     const [currentStadium, setCurrentStadium] = useState(null);

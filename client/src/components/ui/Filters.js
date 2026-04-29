@@ -1,4 +1,4 @@
-import "../../styles/Filters.css";
+import "../../css/Filters.css";
 
 const Filters = ({ activeFilters, setActiveFilters }) => {
     const toggle = (type) => {

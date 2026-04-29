@@ -1,5 +1,5 @@
 import React from "react";
-import "../../styles/Header.css";
+import "../../css/Header.css";
 
 const Header = ({ setCountry }) => {
     return (
