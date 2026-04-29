@@ -1,11 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
 import stadiumsData from "../../data/stadiums.json";
+import stadiumIcon from "../../assets/icons/stadium-arena-svgrepo-com.svg";
+import bedIcon from "../../assets/icons/hotel-left-side-bed-svgrepo-com.svg";
+import restaurantIcon from "../../assets/icons/restaurant-cutlery-svgrepo-com.svg";
+import ticketIcon from "../../assets/icons/ticket-01-svgrepo-com.svg";
 
-const POI_COLORS = {
-    lodging: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
-    restaurant: "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
-    tourist_attraction:
-        "http://maps.google.com/mapfiles/ms/icons/green-dot.png",
+const POI_ICONS = {
+    lodging: { url: bedIcon, scaledSize: new window.google.maps.Size(30, 30) },
+    restaurant: {
+        url: restaurantIcon,
+        scaledSize: new window.google.maps.Size(30, 30),
+    },
+    tourist_attraction: {
+        url: ticketIcon,
+        scaledSize: new window.google.maps.Size(30, 30),
+    },
 };
 
 const Map = ({ country, currentStadium, pois, fetchPlaces, activeFilters }) => {
@@ -67,6 +76,10 @@ const Map = ({ country, currentStadium, pois, fetchPlaces, activeFilters }) => {
                     position: { lat: stadium.lat, lng: stadium.lng },
                     map: mapInstanceRef.current,
                     title: stadium.name,
+                    icon: {
+                        url: stadiumIcon,
+                        scaledSize: new window.google.maps.Size(30, 30),
+                    },
                 });
 
                 marker.addListener("click", () => {
@@ -97,7 +110,7 @@ const Map = ({ country, currentStadium, pois, fetchPlaces, activeFilters }) => {
                     lng: poi.geometry.location.lng(),
                 },
                 map: mapInstanceRef.current,
-                icon: POI_COLORS[poi.category],
+                icon: POI_ICONS[poi.category],
             });
 
             marker.addListener("click", () => {
