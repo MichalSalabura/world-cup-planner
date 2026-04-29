@@ -35,7 +35,7 @@ const Map = ({ country, currentStadium, pois, fetchPlaces }) => {
         fetchPlaces(mapRef.current, {
             lat: currentStadium.lat,
             lng: currentStadium.lng,
-        });
+        }, currentStadium.name);
     }, [currentStadium, isLoaded]);
 
     if (!isLoaded) return <div>Loading...</div>;
@@ -70,7 +70,7 @@ const Map = ({ country, currentStadium, pois, fetchPlaces }) => {
                     fetchPlaces(map, {
                         lat: currentStadium.lat,
                         lng: currentStadium.lng,
-                    });
+                    }, currentStadium.name);
                 }
             }}
         >
