@@ -5,6 +5,7 @@ import Stadiums from "../components/ui/Stadiums";
 import Filters from "../components/ui/Filters";
 import usePlaces from "../hooks/usePlaces";
 import RouteControls from "../components/ui/RouteControls";
+import Weather from "../components/ui/Weather";
 import "../css/Home.css";
 
 export const Home = ({ currentCountry }) => {
@@ -42,6 +43,7 @@ export const Home = ({ currentCountry }) => {
                     setRouteStops={setRouteStops}
                     isRoutingMode={isRoutingMode}
                 />
+                <Weather stadium={currentStadium} />
                 <RouteControls
                     isRoutingMode={isRoutingMode}
                     setIsRoutingMode={setIsRoutingMode}
