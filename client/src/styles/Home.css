@@ -11,4 +11,6 @@
 
 .ms_stadiumCardsContainer {
     width: 50%;
+    height: calc(100vh - 120px);
+    overflow: scroll;
 }

@@ -1,0 +1,25 @@
+.ms_stadiumsContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 10px;
+    gap: 5px;
+}
+
+.ms_stadiumsTitle {
+    align-self: flex-start;
+}
+
+.ms_stadiumCard {
+    width: 90%;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding-left: 10px;
+}
+
+.ms_stadiumCard:hover {
+    cursor: pointer;
+}

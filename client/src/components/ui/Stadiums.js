@@ -10,6 +10,7 @@ const Stadiums = ({ chosenCountry, setCurrentStadium }) => {
 
     return (
         <div className="ms_stadiumsContainer">
+            <div className="ms_stadiumsTitle">Stadiums:</div>
             {filteredStadiums.map((stadium) => (<StadiumCard stadium={stadium} onStadiumClick={setCurrentStadium}/>))}
         </div>
     );
