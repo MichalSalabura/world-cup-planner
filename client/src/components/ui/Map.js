@@ -1,14 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import {
-    GoogleMap,
-    useJsApiLoader,
-    Marker,
-    InfoWindow,
-} from "@react-google-maps/api";
+import React, { useEffect, useRef, useState } from "react";
 import stadiumsData from "../../data/stadiums.json";
-import MarkerInformation from "./MarkerInformation";
-
-const libraries = ["places"];
 
 const POI_COLORS = {
     lodging: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
@@ -18,105 +9,114 @@ const POI_COLORS = {
 };
 
 const Map = ({ country, currentStadium, pois, fetchPlaces }) => {
-    const mapRef = useRef(null);
-    const [selectedMarker, setSelectedMarker] = useState(null);
-    const { isLoaded } = useJsApiLoader({
-        googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-        libraries,
-    });
+    const mapDivRef = useRef(null);
+    const mapInstanceRef = useRef(null);
+    const stadiumMarkersRef = useRef([]);
+    const poiMarkersRef = useRef([]);
+    const infoWindowRef = useRef(null);
+    const [mapReady, setMapReady] = useState(false);
 
     useEffect(() => {
-        if (!mapRef.current || !currentStadium || !isLoaded) return;
-        mapRef.current.panTo({
+        if (!mapDivRef.current || !window.google) return;
+
+        mapInstanceRef.current = new window.google.maps.Map(mapDivRef.current, {
+            center: { lat: 39.8283, lng: -98.5795 },
+            zoom: 4,
+            styles: [
+                {
+                    featureType: "poi",
+                    elementType: "labels",
+                    stylers: [{ visibility: "off" }],
+                },
+                {
+                    featureType: "transit",
+                    elementType: "labels",
+                    stylers: [{ visibility: "off" }],
+                },
+            ],
+        });
+
+        infoWindowRef.current = new window.google.maps.InfoWindow();
+        setMapReady(true);
+    }, []);
+
+    useEffect(() => {
+        if (!mapReady || !mapInstanceRef.current || !currentStadium) return;
+        mapInstanceRef.current.panTo({
             lat: currentStadium.lat,
             lng: currentStadium.lng,
         });
-        mapRef.current.setZoom(14);
-        fetchPlaces(mapRef.current, {
-            lat: currentStadium.lat,
-            lng: currentStadium.lng,
-        }, currentStadium.name);
-    }, [currentStadium, isLoaded]);
+        mapInstanceRef.current.setZoom(14);
+        fetchPlaces(
+            mapInstanceRef.current,
+            { lat: currentStadium.lat, lng: currentStadium.lng },
+            currentStadium.name,
+        );
+    }, [currentStadium, mapReady]);
 
-    if (!isLoaded) return <div>Loading...</div>;
+    useEffect(() => {
+        if (!mapReady || !mapInstanceRef.current) return;
 
-    return (
-        <GoogleMap
-            mapContainerStyle={{ width: "100%", height: "100%" }}
-            defaultCenter={{ lat: 40.8135, lng: -74.0745 }}
-            zoom={12}
-            options={{
-                styles: [
-                    {
-                        featureType: "poi",
-                        elementType: "labels",
-                        stylers: [{ visibility: "off" }],
-                    },
-                    {
-                        featureType: "transit",
-                        elementType: "labels",
-                        stylers: [{ visibility: "off" }],
-                    },
-                ],
-            }}
-            onLoad={(map) => {
-                mapRef.current = map;
-                if (currentStadium) {
-                    map.panTo({
-                        lat: currentStadium.lat,
-                        lng: currentStadium.lng,
-                    });
-                    map.setZoom(14);
-                    fetchPlaces(map, {
-                        lat: currentStadium.lat,
-                        lng: currentStadium.lng,
-                    }, currentStadium.name);
-                }
-            }}
-        >
-            {pois.map((poi, index) => (
-                <Marker
-                    key={index}
-                    position={{
-                        lat: poi.geometry.location.lat(),
-                        lng: poi.geometry.location.lng(),
-                    }}
-                    icon={POI_COLORS[poi.category]}
-                    onClick={() => setSelectedMarker({ ...poi, type: "poi" })}
-                />
-            ))}
-            {stadiumsData.stadiums
-                .filter((s) => s.country === country)
-                .map((stadium) => (
-                    <Marker
-                        key={stadium.id}
-                        position={{ lat: stadium.lat, lng: stadium.lng }}
-                        title={stadium.name}
-                        onClick={() =>
-                            setSelectedMarker({ ...stadium, type: "stadium" })
-                        }
-                    />
-                ))}
-            {selectedMarker && (
-                <InfoWindow
-                    position={
-                        selectedMarker.type === "stadium"
-                            ? {
-                                  lat: selectedMarker.lat,
-                                  lng: selectedMarker.lng,
-                              }
-                            : {
-                                  lat: selectedMarker.geometry.location.lat(),
-                                  lng: selectedMarker.geometry.location.lng(),
-                              }
-                    }
-                    onCloseClick={() => setSelectedMarker(null)}
-                >
-                    <MarkerInformation selectedMarker={selectedMarker} />
-                </InfoWindow>
-            )}
-        </GoogleMap>
-    );
+        stadiumMarkersRef.current.forEach((m) => m.setMap(null));
+        stadiumMarkersRef.current = [];
+
+        stadiumsData.stadiums
+            .filter((s) => s.country === country)
+            .forEach((stadium) => {
+                const marker = new window.google.maps.Marker({
+                    position: { lat: stadium.lat, lng: stadium.lng },
+                    map: mapInstanceRef.current,
+                    title: stadium.name,
+                });
+
+                marker.addListener("click", () => {
+                    infoWindowRef.current.setContent(`
+                        <div>
+                            <h3>${stadium.name}</h3>
+                            <p>${stadium.city}</p>
+                            ${stadium.notable ? `<p>${stadium.notable}</p>` : ""}
+                        </div>
+                    `);
+                    infoWindowRef.current.open(mapInstanceRef.current, marker);
+                });
+
+                stadiumMarkersRef.current.push(marker);
+            });
+    }, [country, mapReady]);
+
+    useEffect(() => {
+        if (!mapReady || !mapInstanceRef.current) return;
+
+        poiMarkersRef.current.forEach((m) => m.setMap(null));
+        poiMarkersRef.current = [];
+
+        pois.forEach((poi) => {
+            const marker = new window.google.maps.Marker({
+                position: {
+                    lat: poi.geometry.location.lat(),
+                    lng: poi.geometry.location.lng(),
+                },
+                map: mapInstanceRef.current,
+                icon: POI_COLORS[poi.category],
+            });
+
+            marker.addListener("click", () => {
+                infoWindowRef.current.setContent(`
+                    <div>
+                        <h3>${poi.name}</h3>
+                        <p>${poi.vicinity}</p>
+                        ${poi.rating ? `<p>${poi.rating} / 5</p>` : ""}
+                        ${poi.opening_hours ? `<p>${poi.opening_hours.open_now ? "Open now" : "Closed"}</p>` : ""}
+                    </div>
+                `);
+                infoWindowRef.current.open(mapInstanceRef.current, marker);
+            });
+
+            poiMarkersRef.current.push(marker);
+        });
+    }, [pois, mapReady]);
+
+    return <div ref={mapDivRef} style={{ width: "100%", height: "100%" }} />;
 };
 
 export default Map;
