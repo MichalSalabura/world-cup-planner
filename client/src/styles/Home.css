@@ -21,3 +21,15 @@
     width: 100%;
     height: 100%;
 }
+
+.ms_infoWindowPhoto {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+.ms_infoWindow {
+    max-width: 250px;
+}

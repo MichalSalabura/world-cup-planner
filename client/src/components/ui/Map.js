@@ -101,8 +101,16 @@ const Map = ({ country, currentStadium, pois, fetchPlaces, activeFilters }) => {
             });
 
             marker.addListener("click", () => {
+                const photoUrl =
+                    poi.photos && poi.photos.length > 0
+                        ? poi.photos[0].getUrl({
+                              maxWidth: 300,
+                              maxHeight: 200,
+                          })
+                        : null;
                 infoWindowRef.current.setContent(`
-                    <div>
+                    <div class="ms_infoWindow">
+                        ${photoUrl ? `<img src="${photoUrl}" alt="${poi.name}" class="ms_infoWindowPhoto" />` : ""}
                         <h3>${poi.name}</h3>
                         <p>${poi.vicinity}</p>
                         ${poi.rating ? `<p>${poi.rating} / 5</p>` : ""}
@@ -116,7 +124,7 @@ const Map = ({ country, currentStadium, pois, fetchPlaces, activeFilters }) => {
         });
     }, [pois, mapReady, activeFilters]);
 
-    return <div ref={mapDivRef} className="ms_map"/>;
+    return <div ref={mapDivRef} className="ms_map" />;
 };
 
 export default Map;
