@@ -17,14 +17,36 @@ const POI_ICONS = {
     },
 };
 
-const Map = ({ country, currentStadium, pois, fetchPlaces, activeFilters }) => {
+const Map = ({
+    country,
+    currentStadium,
+    pois,
+    fetchPlaces,
+    activeFilters,
+    routeStops,
+    setRouteStops,
+    isRoutingMode,
+}) => {
     const mapDivRef = useRef(null);
     const mapInstanceRef = useRef(null);
     const stadiumMarkersRef = useRef([]);
     const poiMarkersRef = useRef([]);
+    const routeMarkersRef = useRef([]);
     const infoWindowRef = useRef(null);
+    const directionsRendererRef = useRef(null);
+    const directionsServiceRef = useRef(null);
+    const isRoutingModeRef = useRef(false);
+    const routeStopsRef = useRef([]);
     const [mapReady, setMapReady] = useState(false);
 
+    useEffect(() => {
+        isRoutingModeRef.current = isRoutingMode;
+    }, [isRoutingMode]);
+    useEffect(() => {
+        routeStopsRef.current = routeStops;
+    }, [routeStops]);
+
+    // create map instance
     useEffect(() => {
         if (!mapDivRef.current || !window.google) return;
 
@@ -46,9 +68,40 @@ const Map = ({ country, currentStadium, pois, fetchPlaces, activeFilters }) => {
         });
 
         infoWindowRef.current = new window.google.maps.InfoWindow();
+
+        directionsServiceRef.current =
+            new window.google.maps.DirectionsService();
+        directionsRendererRef.current =
+            new window.google.maps.DirectionsRenderer({
+                suppressMarkers: true,
+            });
+        directionsRendererRef.current.setMap(mapInstanceRef.current);
+
+        mapInstanceRef.current.addListener("click", (e) => {
+            if (!isRoutingModeRef.current) return;
+
+            const geocoder = new window.google.maps.Geocoder();
+            geocoder.geocode({ location: e.latLng }, (results, status) => {
+                const name =
+                    status === "OK" && results[0]
+                        ? results[0].formatted_address
+                        : `Stop ${routeStopsRef.current.length + 1}`;
+
+                setRouteStops((prev) => [
+                    ...prev,
+                    {
+                        lat: e.latLng.lat(),
+                        lng: e.latLng.lng(),
+                        name,
+                    },
+                ]);
+            });
+        });
+
         setMapReady(true);
     }, []);
 
+    // move map to current stadium
     useEffect(() => {
         if (!mapReady || !mapInstanceRef.current || !currentStadium) return;
         mapInstanceRef.current.panTo({
@@ -63,6 +116,7 @@ const Map = ({ country, currentStadium, pois, fetchPlaces, activeFilters }) => {
         );
     }, [currentStadium, mapReady]);
 
+    // create stadium marker + infowindow
     useEffect(() => {
         if (!mapReady || !mapInstanceRef.current) return;
 
@@ -97,6 +151,7 @@ const Map = ({ country, currentStadium, pois, fetchPlaces, activeFilters }) => {
             });
     }, [country, mapReady]);
 
+    // create poi markers and their infowindows on click
     useEffect(() => {
         if (!mapReady || !mapInstanceRef.current) return;
 
@@ -136,6 +191,65 @@ const Map = ({ country, currentStadium, pois, fetchPlaces, activeFilters }) => {
             poiMarkersRef.current.push(marker);
         });
     }, [pois, mapReady, activeFilters]);
+
+    // create route
+    useEffect(() => {
+        if (!mapReady || !mapInstanceRef.current) return;
+
+        routeMarkersRef.current.forEach((m) => m.setMap(null));
+        routeMarkersRef.current = [];
+
+        if (routeStops.length < 2) {
+            directionsRendererRef.current.setDirections({ routes: [] });
+        }
+
+        routeStops.forEach((stop, i) => {
+            const marker = new window.google.maps.Marker({
+                position: { lat: stop.lat, lng: stop.lng },
+                map: mapInstanceRef.current,
+                label: {
+                    text: `${i + 1}`,
+                    color: "white",
+                    fontWeight: "bold",
+                },
+                icon: {
+                    path: window.google.maps.SymbolPath.CIRCLE,
+                    scale: 14,
+                    fillColor: "#e63946",
+                    fillOpacity: 1,
+                    strokeColor: "white",
+                    strokeWeight: 2,
+                },
+            });
+            routeMarkersRef.current.push(marker);
+        });
+
+        if (routeStops.length >= 2) {
+            const origin = { lat: routeStops[0].lat, lng: routeStops[0].lng };
+            const destination = {
+                lat: routeStops[routeStops.length - 1].lat,
+                lng: routeStops[routeStops.length - 1].lng,
+            };
+            const waypoints = routeStops.slice(1, -1).map((stop) => ({
+                location: { lat: stop.lat, lng: stop.lng },
+                stopover: true,
+            }));
+
+            directionsServiceRef.current.route(
+                {
+                    origin,
+                    destination,
+                    waypoints,
+                    travelMode: window.google.maps.TravelMode.DRIVING,
+                },
+                (result, status) => {
+                    if (status === "OK") {
+                        directionsRendererRef.current.setDirections(result);
+                    }
+                },
+            );
+        }
+    });
 
     return <div ref={mapDivRef} className="ms_map" />;
 };

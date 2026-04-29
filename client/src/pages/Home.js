@@ -4,6 +4,7 @@ import Map from "../components/ui/Map";
 import Stadiums from "../components/ui/Stadiums";
 import Filters from "../components/ui/Filters";
 import usePlaces from "../hooks/usePlaces";
+import RouteControls from "../components/ui/RouteControls";
 import "../css/Home.css";
 
 export const Home = ({ currentCountry }) => {
@@ -14,6 +15,8 @@ export const Home = ({ currentCountry }) => {
         lodging: true,
         tourist_attraction: true,
     });
+    const [routeStops, setRouteStops] = useState([]);
+    const [isRoutingMode, setIsRoutingMode] = useState(false);
 
     useEffect(() => {
         const first = stadiumsData.stadiums.find(
@@ -35,6 +38,15 @@ export const Home = ({ currentCountry }) => {
                     pois={pois}
                     fetchPlaces={fetchPlaces}
                     activeFilters={activeFilters}
+                    routeStops={routeStops}
+                    setRouteStops={setRouteStops}
+                    isRoutingMode={isRoutingMode}
+                />
+                <RouteControls
+                    isRoutingMode={isRoutingMode}
+                    setIsRoutingMode={setIsRoutingMode}
+                    routeStops={routeStops}
+                    setRouteStops={setRouteStops}
                 />
             </div>
             <div className="ms_stadiumCardsContainer">
