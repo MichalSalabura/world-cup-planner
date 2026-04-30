@@ -24,18 +24,6 @@
     flex: 1;
 }
 
-.ms_infoWindowPhoto {
-    width: 90%;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 4px;
-    margin-bottom: 8px;
-}
-
-.ms_infoWindow {
-    max-width: 250px;
-}
-
 @media (max-width: 768px) {
     .ms_container {
         flex-direction: column;
@@ -49,7 +37,6 @@
     .ms_stadiumCardsContainer {
         width: 100%;
         height: 45vh;
-        padding-bottom: 10px;
         overflow-y: auto;
     }
 }
@@ -62,6 +49,5 @@
 
     .ms_stadiumCardsContainer {
         height: 50vh;
-        padding-bottom: 10px;
     }
 }
