@@ -142,9 +142,32 @@ const Map = ({
                             <h3>${stadium.name}</h3>
                             <p>${stadium.city}</p>
                             ${stadium.notable ? `<p>${stadium.notable}</p>` : ""}
+                            <div id="ms_infoWindowWiki">Loading info...</div>
                         </div>
                     `);
                     infoWindowRef.current.open(mapInstanceRef.current, marker);
+
+                    fetch(
+                        `https://en.wikipedia.org/api/rest_v1/page/summary/${stadium.name}`,
+                    )
+                        .then((res) => {
+                            if (!res) throw new Error("Not found");
+                            return res.json();
+                        })
+                        .then((data) => {
+                            const wikiDiv =
+                                document.getElementById("ms_infoWindowWiki");
+                            if (!wikiDiv) return;
+                            wikiDiv.innerHTML = `
+                                        <div class="ms_wikiSummary">
+                                            <p>${data.extract}</p>
+                                            <a href="${data.content_urls.desktop.page}" target="_blank" rel="noreferrer">Read more on Wikipedia</a>
+                                        </div>
+                        `;
+                        })
+                        .catch((e) => {
+                            console.log(e);
+                        });
                 });
 
                 stadiumMarkersRef.current.push(marker);
@@ -183,9 +206,32 @@ const Map = ({
                         <p>${poi.vicinity}</p>
                         ${poi.rating ? `<p>${poi.rating} / 5</p>` : ""}
                         ${poi.opening_hours ? `<p>${poi.opening_hours.open_now ? "Open now" : "Closed"}</p>` : ""}
+                        <div id="ms_infoWindowWiki">Loading info...</div>
                     </div>
                 `);
                 infoWindowRef.current.open(mapInstanceRef.current, marker);
+
+                fetch(
+                    `https://en.wikipedia.org/api/rest_v1/page/summary/${poi.name}`,
+                )
+                    .then((res) => {
+                        if (!res) throw new Error("Not found");
+                        return res.json();
+                    })
+                    .then((data) => {
+                        const wikiDiv =
+                            document.getElementById("ms_infoWindowWiki");
+                        if (!wikiDiv) return;
+                        wikiDiv.innerHTML = `
+                                        <div class="ms_wikiSummary">
+                                            <p>${data.extract}</p>
+                                            <a href="${data.content_urls.desktop.page}" target="_blank" rel="noreferrer">Read more on Wikipedia</a>
+                                        </div>
+                        `;
+                    })
+                    .catch((e) => {
+                        console.log(e);
+                    });
             });
 
             poiMarkersRef.current.push(marker);
