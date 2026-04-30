@@ -98,14 +98,6 @@
     background: gray;
 }
 
-.ms_routeError {
-    color: red;
-    font-size: 12px;
-    margin: 0;
-    padding: 4px 0;
-}
-
-
 @media (max-width: 600px) {
     .ms_routeControls {
         top: 90px;

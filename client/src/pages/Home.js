@@ -10,7 +10,7 @@ import "../css/Home.css";
 
 export const Home = ({ currentCountry }) => {
     const [currentStadium, setCurrentStadium] = useState(null);
-    const [pois, fetchPlaces] = usePlaces();
+    const [pois, fetchPlaces, placesError] = usePlaces();
     const [activeFilters, setActiveFilters] = useState({
         restaurant: true,
         lodging: true,
@@ -34,6 +34,7 @@ export const Home = ({ currentCountry }) => {
                     activeFilters={activeFilters}
                     setActiveFilters={setActiveFilters}
                 />
+                {placesError && <p className="ms_error">{placesError}</p>}
                 <Map
                     country={currentCountry}
                     currentStadium={currentStadium}

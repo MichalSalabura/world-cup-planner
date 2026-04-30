@@ -59,7 +59,7 @@ const RouteControls = ({
                         </button>
                     )}
                     {routeError && (
-                        <p className="ms_routeError">{routeError}</p>
+                        <p className="ms_error">{routeError}</p>
                     )}
                 </div>
             )}

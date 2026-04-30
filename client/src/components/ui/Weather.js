@@ -37,7 +37,7 @@ const Weather = ({ stadium }) => {
         return <div className="ms_weatherContainer">Loading Weather...</div>;
     if (error)
         return (
-            <div className="ms_weatherContainer ms_weatherError">{error}</div>
+            <div className="ms_weatherContainer ms_error">{error}</div>
         );
     if (!weather) return null;
 

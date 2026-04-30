@@ -11,10 +11,6 @@
     min-width: 100px;
 }
 
-.ms_weatherError {
-    color: #ff6b6b;
-}
-
 .ms_weatherCity {
     font-weight: bold;
     margin: 0 0 4px 0;
