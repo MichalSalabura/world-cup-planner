@@ -16,6 +16,7 @@ const Stadiums = ({ chosenCountry, setCurrentStadium }) => {
             <div className="ms_stadiumsCardsWrapper">
             {filteredStadiums.map((stadium) => (
                 <StadiumCard
+                    key={stadium.id}
                     stadium={stadium}
                     onStadiumClick={setCurrentStadium}
                 />
