@@ -1,6 +1,6 @@
 .ms_routeControls {
     position: absolute;
-    top: 50px;
+    top: 100px;
     right: 15px;
     z-index: 10;
     display: flex;
@@ -10,7 +10,7 @@
 }
 
 .ms_routeToggle {
-    background-color: #1a1a2e;
+    background-color: darkgray;
     color: white;
     border: none;
     border-radius: 8px;
@@ -20,15 +20,15 @@
 }
 
 .ms_routeToggle:hover {
-    background-color: #2a2a4e;
+    background-color: darkgray;
 }
 
 .ms_routeToggleActive {
-    background-color: #e63946;
+    background-color: red;
 }
 
 .ms_routeToggleActive:hover {
-    background-color: #c1121f;
+    background-color: red;
 }
 
 .ms_routePanel {
@@ -46,13 +46,13 @@
 
 .ms_routeHint {
     font-size: 12px;
-    color: #ccc;
+    color: lightgray;
     margin: 0;
 }
 
 .ms_routeEmpty {
     font-size: 12px;
-    color: #aaa;
+    color: gray;
     margin: 0;
 }
 
@@ -72,7 +72,7 @@
 }
 
 .ms_routeStopRemove {
-    background: #e63946;
+    background: red;
     color: white;
     border: none;
     border-radius: 4px;
@@ -83,7 +83,7 @@
 }
 
 .ms_routeClear {
-    background: #444;
+    background: darkgray;
     color: white;
     border: none;
     border-radius: 6px;
@@ -95,12 +95,12 @@
 }
 
 .ms_routeClear:hover {
-    background: #666;
+    background: gray;
 }
 
-@media (max-width: 599px) {
+@media (max-width: 600px) {
     .ms_routeControls {
-        top: 40px;
+        top: 90px;
         right: 8px;
     }
 
