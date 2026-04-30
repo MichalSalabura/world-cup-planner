@@ -6,23 +6,30 @@
 }
 
 .ms_filterButton {
-    background-color: lightgray;
-    border-radius: 5px;
-    padding: 5px 10px;
+    background: #f0f0f0;
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 600;
     cursor: pointer;
-    font-size: 14px;
+    transition:
+        background 0.2s,
+        color 0.2s;
     text-align: center;
     align-self: center;
 }
 
 .ms_filterButton:hover {
-    cursor: pointer;
-    background-color: darkgray;
+    background: #ddd;
 }
 
 .ms_filterActive {
-    background-color: gray;
+    background: #0d1b2a;
     color: white;
+}
+
+.ms_filterActive:hover {
+    background: #1a2f45;
 }
 
 .ms_ratingFilter {

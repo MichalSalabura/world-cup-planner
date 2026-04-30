@@ -25,7 +25,7 @@
 }
 
 .ms_infoWindowPhoto {
-    width: 100%;
+    width: 90%;
     height: 150px;
     object-fit: cover;
     border-radius: 4px;

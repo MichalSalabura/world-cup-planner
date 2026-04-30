@@ -1,6 +1,6 @@
 .ms_weatherContainer {
     position: absolute;
-    bottom: 75px;
+    bottom: 50px;
     left: 15px;
     z-index: 5;
     background: rgba(0, 0, 0, 0.65);
@@ -35,7 +35,7 @@
 
 @media (max-width: 600px) {
     .ms_weatherContainer {
-        bottom: 75px;
+        bottom: 50px;
         left: 8px;
         padding: 6px 10px;
         min-width: 80px;
