@@ -90,7 +90,7 @@ const Map = ({
         });
 
         setMapReady(true);
-    }, []);
+    }, [setRouteError, setRouteStops]);
 
     // move map to current stadium
     useEffect(() => {
@@ -105,7 +105,7 @@ const Map = ({
             { lat: currentStadium.lat, lng: currentStadium.lng },
             currentStadium.name,
         );
-    }, [currentStadium, mapReady]);
+    }, [currentStadium, mapReady, fetchPlaces]);
 
     // create stadium marker + infowindow
     useEffect(() => {
@@ -348,7 +348,7 @@ const Map = ({
                 },
             );
         }
-    }, [routeStops, mapReady]);
+    }, [routeStops, mapReady, setRouteError]);
 
     return <div ref={mapDivRef} className="ms_map" />;
 };
