@@ -5,18 +5,6 @@ import bedIcon from "../../assets/icons/hotel-left-side-bed-svgrepo-com.svg";
 import restaurantIcon from "../../assets/icons/restaurant-cutlery-svgrepo-com.svg";
 import ticketIcon from "../../assets/icons/ticket-01-svgrepo-com.svg";
 
-const POI_ICONS = {
-    lodging: { url: bedIcon, scaledSize: new window.google.maps.Size(30, 30) },
-    restaurant: {
-        url: restaurantIcon,
-        scaledSize: new window.google.maps.Size(30, 30),
-    },
-    tourist_attraction: {
-        url: ticketIcon,
-        scaledSize: new window.google.maps.Size(30, 30),
-    },
-};
-
 const Map = ({
     country,
     currentStadium,
@@ -143,11 +131,50 @@ const Map = ({
                         <div>
                             <h3>${stadium.name}</h3>
                             <p>${stadium.city}</p>
-                            ${stadium.notable ? `<p>${stadium.notable}</p>` : ""}
                             <div id="ms_infoWindowWiki">Loading info...</div>
                         </div>
                     `);
                     infoWindowRef.current.open(mapInstanceRef.current, marker);
+
+                    if (stadium.placeId) {
+                        const service =
+                            new window.google.maps.places.PlacesService(
+                                mapInstanceRef.current,
+                            );
+                        service.getDetails(
+                            {
+                                placeId: stadium.placeId,
+                                fields: ["photos", "rating", "opening_hours"],
+                            },
+                            (place, status) => {
+                                if (
+                                    status ===
+                                        window.google.maps.places
+                                            .PlacesServiceStatus.OK &&
+                                    place.photos?.length > 0
+                                ) {
+                                    const photoUrl = place.photos[0].getUrl({
+                                        maxWidth: 300,
+                                        maxHeight: 200,
+                                    });
+                                    infoWindowRef.current.setContent(`
+                                                                    <div class="ms_infoWindow">
+                                                                        <img src="${photoUrl}" alt="${stadium.name}" class="ms_infoWindowPhoto" />
+                                                                        <h3>${stadium.name}</h3>
+                                                                        <p>${stadium.city}</p>
+                                                                        ${place.rating ? `<p>${place.rating} / 5</p>` : ""}
+                                                                        ${place.opening_hours ? `<p>${place.opening_hours.open_now ? "Open now" : "Closed"}</p>` : ""}
+                                                                        <div id="ms_infoWindowWiki">Loading info...</div>
+                                                                    </div>
+                                                                `);
+                                    infoWindowRef.current.open(
+                                        mapInstanceRef.current,
+                                        marker,
+                                    );
+                                }
+                            },
+                        );
+                    }
 
                     fetch(
                         `https://en.wikipedia.org/api/rest_v1/page/summary/${stadium.name}`,
@@ -182,6 +209,21 @@ const Map = ({
 
         poiMarkersRef.current.forEach((m) => m.setMap(null));
         poiMarkersRef.current = [];
+
+        const POI_ICONS = {
+            lodging: {
+                url: bedIcon,
+                scaledSize: new window.google.maps.Size(30, 30),
+            },
+            restaurant: {
+                url: restaurantIcon,
+                scaledSize: new window.google.maps.Size(30, 30),
+            },
+            tourist_attraction: {
+                url: ticketIcon,
+                scaledSize: new window.google.maps.Size(30, 30),
+            },
+        };
 
         pois.filter((poi) => activeFilters[poi.category]).forEach((poi) => {
             const marker = new window.google.maps.Marker({
@@ -301,7 +343,7 @@ const Map = ({
                 },
             );
         }
-    });
+    }, [routeStops, mapReady]);
 
     return <div ref={mapDivRef} className="ms_map" />;
 };

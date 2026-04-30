@@ -6,7 +6,8 @@
             "city": "New York/New Jersey",
             "country": "USA",
             "lat": 40.8135,
-            "lng": -74.0745
+            "lng": -74.0745,
+            "placeId": "ChIJvwJZrWH4wokRNBcFMQ0ohIE"
         },
         {
             "id": 2,
@@ -14,7 +15,8 @@
             "city": "Dallas",
             "country": "USA",
             "lat": 32.7473,
-            "lng": -97.0945
+            "lng": -97.0945,
+            "placeId": "ChIJJ0eIyIZ9ToYR-J1qjOhgHm0"
         },
         {
             "id": 3,
@@ -22,7 +24,8 @@
             "city": "Los Angeles",
             "country": "USA",
             "lat": 33.9535,
-            "lng": -118.3392
+            "lng": -118.3392,
+            "placeId": "ChIJT4_7y4a3woARcEGeJLecuV8"
         },
         {
             "id": 4,
@@ -30,7 +33,8 @@
             "city": "Houston",
             "country": "USA",
             "lat": 29.6847,
-            "lng": -95.4107
+            "lng": -95.4107,
+            "placeId": "ChIJrWtASxnAQIYRV52aOcJuDxs"
         },
         {
             "id": 5,
@@ -38,7 +42,8 @@
             "city": "Miami",
             "country": "USA",
             "lat": 25.958,
-            "lng": -80.2389
+            "lng": -80.2389,
+            "placeId": "ChIJqfO1lwSv2YgR2_kLxpThFVg"
         },
         {
             "id": 6,
@@ -46,7 +51,8 @@
             "city": "Boston",
             "country": "USA",
             "lat": 42.0909,
-            "lng": -71.2643
+            "lng": -71.2643,
+            "placeId": "ChIJZz33diRj5IkR3spL_utr9mg"
         },
         {
             "id": 7,
@@ -54,7 +60,8 @@
             "city": "Philadelphia",
             "country": "USA",
             "lat": 39.9008,
-            "lng": -75.1675
+            "lng": -75.1675,
+            "placeId": "ChIJMd064KnHxokRCTcp1DYABfQ"
         },
         {
             "id": 8,
@@ -62,7 +69,8 @@
             "city": "Atlanta",
             "country": "USA",
             "lat": 33.7553,
-            "lng": -84.4006
+            "lng": -84.4006,
+            "placeId": "ChIJ45nHOHwD9YgR7vBdgAC-QWU"
         },
         {
             "id": 9,
@@ -70,7 +78,8 @@
             "city": "San Francisco",
             "country": "USA",
             "lat": 37.4033,
-            "lng": -121.9694
+            "lng": -121.9694,
+            "placeId": "ChIJ3_DFJ8jJj4ARGH0fLjdaRRE"
         },
         {
             "id": 10,
@@ -78,7 +87,8 @@
             "city": "Seattle",
             "country": "USA",
             "lat": 47.5952,
-            "lng": -122.3316
+            "lng": -122.3316,
+            "placeId": "ChIJKxjxuaNqkFQR3CK6O1HNNqY"
         },
         {
             "id": 11,
@@ -86,7 +96,8 @@
             "city": "Kansas City",
             "country": "USA",
             "lat": 39.0489,
-            "lng": -94.4839
+            "lng": -94.4839,
+            "placeId": "ChIJK5LblKHkwIcR5kQl94xNzbw"
         },
         {
             "id": 12,
@@ -94,7 +105,8 @@
             "city": "Mexico City",
             "country": "Mexico",
             "lat": 19.3029,
-            "lng": -99.1505
+            "lng": -99.1505,
+            "placeId": "ChIJGQkBCFIAzoURlLaQUWnuYZc"
         },
         {
             "id": 13,
@@ -102,7 +114,8 @@
             "city": "Guadalajara",
             "country": "Mexico",
             "lat": 20.6692,
-            "lng": -103.4674
+            "lng": -103.4674,
+            "placeId": "ChIJs46KiTepKIQRiGs17rYNrVI"
         },
         {
             "id": 14,
@@ -110,7 +123,8 @@
             "city": "Monterrey",
             "country": "Mexico",
             "lat": 25.6693,
-            "lng": -100.2438
+            "lng": -100.2438,
+            "placeId": "ChIJ18ik9xnAYoYRTZTFwsCNR78"
         },
         {
             "id": 15,
@@ -118,7 +132,8 @@
             "city": "Toronto",
             "country": "Canada",
             "lat": 43.6333,
-            "lng": -79.4189
+            "lng": -79.4189,
+            "placeId": "ChIJUUPv9gU1K4gRLQy397NpIZ0"
         },
         {
             "id": 16,
@@ -126,7 +141,8 @@
             "city": "Vancouver",
             "country": "Canada",
             "lat": 49.2768,
-            "lng": -123.1118
+            "lng": -123.1118,
+            "placeId": "ChIJ1eC-_HxxhlQRuxiCkf1NQPk"
         }
     ]
 }
