@@ -1,18 +1,31 @@
 .ms_filtersContainer {
     display: flex;
     justify-content: space-evenly;
+    flex-wrap: wrap;
+    gap: 5px;
 }
 
 .ms_filterButton {
     background-color: lightgray;
     border-radius: 5px;
-    padding: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px;
 }
 
 .ms_filterButton:hover {
     cursor: pointer;
+    background-color: darkgray;
 }
 
 .ms_filterActive {
     background-color: gray;
+    color: white;
+}
+
+@media (max-width: 600px) {
+    .ms_filterButton {
+        font-size: 12px;
+        padding: 4px 8px;
+    }
 }

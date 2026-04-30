@@ -1,11 +1,12 @@
 .ms_container {
     height: 100%;
     display: flex;
+    flex-direction: row;
 }
 
 #ms_mapContainer {
     padding: 10px;
-    width: 50%;
+    width: 60%;
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -13,14 +14,14 @@
 }
 
 .ms_stadiumCardsContainer {
-    width: 50%;
-    height: calc(100vh - 120px);
-    overflow: scroll;
+    width: 40%;
+    height: 100%;
+    padding-bottom: 10px;
 }
 
 .ms_map {
     width: 100%;
-    height: 100%;
+    flex: 1;
 }
 
 .ms_infoWindowPhoto {
@@ -33,4 +34,34 @@
 
 .ms_infoWindow {
     max-width: 250px;
+}
+
+@media (max-width: 768px) {
+    .ms_container {
+        flex-direction: column;
+    }
+
+    #ms_mapContainer {
+        width: 100%;
+        height: 55vh;
+    }
+
+    .ms_stadiumCardsContainer {
+        width: 100%;
+        height: 45vh;
+        padding-bottom: 10px;
+        overflow-y: auto;
+    }
+}
+
+@media (max-width: 600px) {
+    #ms_mapContainer {
+        height: 50vh;
+        padding: 5px;
+    }
+
+    .ms_stadiumCardsContainer {
+        height: 50vh;
+        padding-bottom: 10px;
+    }
 }
