@@ -11,6 +11,8 @@
     padding: 5px 10px;
     cursor: pointer;
     font-size: 14px;
+    text-align: center;
+    align-self: center;
 }
 
 .ms_filterButton:hover {
@@ -21,6 +23,22 @@
 .ms_filterActive {
     background-color: gray;
     color: white;
+}
+
+.ms_ratingFilter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.ms_ratingLabel {
+    font-size: 13px;
+}
+
+.ms_ratingInput {
+    width: 100px;
+    cursor: pointer;
 }
 
 @media (max-width: 600px) {
