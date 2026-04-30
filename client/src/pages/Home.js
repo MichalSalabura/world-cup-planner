@@ -18,6 +18,7 @@ export const Home = ({ currentCountry }) => {
     });
     const [routeStops, setRouteStops] = useState([]);
     const [isRoutingMode, setIsRoutingMode] = useState(false);
+    const [routeError, setRouteError] = useState("");
 
     useEffect(() => {
         const first = stadiumsData.stadiums.find(
@@ -42,6 +43,7 @@ export const Home = ({ currentCountry }) => {
                     routeStops={routeStops}
                     setRouteStops={setRouteStops}
                     isRoutingMode={isRoutingMode}
+                    setRouteError={setRouteError}
                 />
                 <Weather stadium={currentStadium} />
                 <RouteControls
@@ -49,6 +51,8 @@ export const Home = ({ currentCountry }) => {
                     setIsRoutingMode={setIsRoutingMode}
                     routeStops={routeStops}
                     setRouteStops={setRouteStops}
+                    routeError={routeError}
+                    setRouteError={setRouteError}
                 />
             </div>
             <div className="ms_stadiumCardsContainer">

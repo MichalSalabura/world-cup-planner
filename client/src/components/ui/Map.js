@@ -26,6 +26,7 @@ const Map = ({
     routeStops,
     setRouteStops,
     isRoutingMode,
+    setRouteError,
 }) => {
     const mapDivRef = useRef(null);
     const mapInstanceRef = useRef(null);
@@ -95,6 +96,7 @@ const Map = ({
                         name,
                     },
                 ]);
+                setRouteError("");
             });
         });
 
@@ -291,6 +293,10 @@ const Map = ({
                 (result, status) => {
                     if (status === "OK") {
                         directionsRendererRef.current.setDirections(result);
+                    } else {
+                        setRouteError(
+                            "Could not calculate route. Try selecting different locations.",
+                        );
                     }
                 },
             );

@@ -5,6 +5,8 @@ const RouteControls = ({
     setIsRoutingMode,
     routeStops,
     setRouteStops,
+    routeError,
+    setRouteError,
 }) => {
     return (
         <div className="ms_routeControls">
@@ -48,10 +50,16 @@ const RouteControls = ({
                     {routeStops.length > 0 && (
                         <button
                             className="ms_routeClear"
-                            onClick={() => setRouteStops([])}
+                            onClick={() => {
+                                setRouteStops([]);
+                                setRouteError("");
+                            }}
                         >
                             Clear All
                         </button>
+                    )}
+                    {routeError && (
+                        <p className="ms_routeError">{routeError}</p>
                     )}
                 </div>
             )}
