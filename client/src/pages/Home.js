@@ -19,6 +19,7 @@ export const Home = ({ currentCountry }) => {
     const [routeStops, setRouteStops] = useState([]);
     const [isRoutingMode, setIsRoutingMode] = useState(false);
     const [routeError, setRouteError] = useState("");
+    const [minRating, setMinRating] = useState(0);
 
     useEffect(() => {
         const first = stadiumsData.stadiums.find(
@@ -33,6 +34,8 @@ export const Home = ({ currentCountry }) => {
                 <Filters
                     activeFilters={activeFilters}
                     setActiveFilters={setActiveFilters}
+                    minRating={minRating}
+                    setMinRating={setMinRating}
                 />
                 {placesError && <p className="ms_error">{placesError}</p>}
                 <Map
@@ -45,6 +48,7 @@ export const Home = ({ currentCountry }) => {
                     setRouteStops={setRouteStops}
                     isRoutingMode={isRoutingMode}
                     setRouteError={setRouteError}
+                    minRating={minRating}
                 />
                 <Weather stadium={currentStadium} />
                 <RouteControls

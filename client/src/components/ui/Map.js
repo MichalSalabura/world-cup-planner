@@ -15,6 +15,7 @@ const Map = ({
     setRouteStops,
     isRoutingMode,
     setRouteError,
+    minRating,
 }) => {
     const mapDivRef = useRef(null);
     const mapInstanceRef = useRef(null);
@@ -225,25 +226,29 @@ const Map = ({
             },
         };
 
-        pois.filter((poi) => activeFilters[poi.category]).forEach((poi) => {
-            const marker = new window.google.maps.Marker({
-                position: {
-                    lat: poi.geometry.location.lat(),
-                    lng: poi.geometry.location.lng(),
-                },
-                map: mapInstanceRef.current,
-                icon: POI_ICONS[poi.category],
-            });
+        pois.filter((poi) => activeFilters[poi.category])
+            .filter(
+                (poi) => !minRating || (poi.rating && poi.rating >= minRating),
+            )
+            .forEach((poi) => {
+                const marker = new window.google.maps.Marker({
+                    position: {
+                        lat: poi.geometry.location.lat(),
+                        lng: poi.geometry.location.lng(),
+                    },
+                    map: mapInstanceRef.current,
+                    icon: POI_ICONS[poi.category],
+                });
 
-            marker.addListener("click", () => {
-                const photoUrl =
-                    poi.photos && poi.photos.length > 0
-                        ? poi.photos[0].getUrl({
-                              maxWidth: 300,
-                              maxHeight: 200,
-                          })
-                        : null;
-                infoWindowRef.current.setContent(`
+                marker.addListener("click", () => {
+                    const photoUrl =
+                        poi.photos && poi.photos.length > 0
+                            ? poi.photos[0].getUrl({
+                                  maxWidth: 300,
+                                  maxHeight: 200,
+                              })
+                            : null;
+                    infoWindowRef.current.setContent(`
                     <div class="ms_infoWindow">
                         ${photoUrl ? `<img src="${photoUrl}" alt="${poi.name}" class="ms_infoWindowPhoto" />` : ""}
                         <h3>${poi.name}</h3>
@@ -253,34 +258,34 @@ const Map = ({
                         <div id="ms_infoWindowWiki">Loading info...</div>
                     </div>
                 `);
-                infoWindowRef.current.open(mapInstanceRef.current, marker);
+                    infoWindowRef.current.open(mapInstanceRef.current, marker);
 
-                fetch(
-                    `https://en.wikipedia.org/api/rest_v1/page/summary/${poi.name}`,
-                )
-                    .then((res) => {
-                        if (!res) throw new Error("Not found");
-                        return res.json();
-                    })
-                    .then((data) => {
-                        const wikiDiv =
-                            document.getElementById("ms_infoWindowWiki");
-                        if (!wikiDiv) return;
-                        wikiDiv.innerHTML = `
+                    fetch(
+                        `https://en.wikipedia.org/api/rest_v1/page/summary/${poi.name}`,
+                    )
+                        .then((res) => {
+                            if (!res) throw new Error("Not found");
+                            return res.json();
+                        })
+                        .then((data) => {
+                            const wikiDiv =
+                                document.getElementById("ms_infoWindowWiki");
+                            if (!wikiDiv) return;
+                            wikiDiv.innerHTML = `
                                         <div class="ms_wikiSummary">
                                             <p>${data.extract}</p>
                                             <a href="${data.content_urls.desktop.page}" target="_blank" rel="noreferrer">Read more on Wikipedia</a>
                                         </div>
                         `;
-                    })
-                    .catch((e) => {
-                        console.log(e);
-                    });
-            });
+                        })
+                        .catch((e) => {
+                            console.log(e);
+                        });
+                });
 
-            poiMarkersRef.current.push(marker);
-        });
-    }, [pois, mapReady, activeFilters]);
+                poiMarkersRef.current.push(marker);
+            });
+    }, [pois, mapReady, activeFilters, minRating]);
 
     // create route
     useEffect(() => {
