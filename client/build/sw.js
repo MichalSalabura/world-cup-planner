@@ -8,7 +8,6 @@ const filesToCache = [
     "./icons/icon_large.png",
 ];
 
-// install — cache files
 self.addEventListener("install", (e) => {
     e.waitUntil(
         caches.open(cacheName).then((cache) => {
@@ -17,7 +16,6 @@ self.addEventListener("install", (e) => {
     );
 });
 
-// activate — delete old caches
 self.addEventListener("activate", (e) => {
     e.waitUntil(
         caches.keys().then((cacheNames) => {
@@ -32,9 +30,7 @@ self.addEventListener("activate", (e) => {
     );
 });
 
-// fetch — cache first, then network, then offline
 self.addEventListener("fetch", (e) => {
-    // don't intercept Google Maps requests
     if (
         e.request.url.includes("maps.googleapis.com") ||
         e.request.url.includes("maps.gstatic.com") ||
@@ -45,13 +41,17 @@ self.addEventListener("fetch", (e) => {
     }
 
     e.respondWith(
-        caches.match(e.request).then((response) => {
-            if (response) {
+        fetch(e.request)
+            .then((response) => {
                 return response;
-            }
-            return fetch(e.request).catch(() => {
-                return caches.match("./index.html");
-            });
-        }),
+            })
+            .catch(() => {
+                return caches.match(e.request).then((response) => {
+                    if (response) {
+                        return response;
+                    }
+                    return caches.match("./index.html");
+                });
+            }),
     );
 });

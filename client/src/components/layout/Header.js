@@ -14,7 +14,6 @@ const Header = ({ setCountry }) => {
             <button
                 className="ms_hamburger"
                 onClick={() => setMenuOpen(!menuOpen)}
-                aria-label="Toggle menu"
             >
                 <span
                     className={`ms_hamburgerLine ${menuOpen ? "ms_hamburgerOpen" : ""}`}

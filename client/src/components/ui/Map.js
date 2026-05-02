@@ -181,13 +181,19 @@ const Map = ({
                         `https://en.wikipedia.org/api/rest_v1/page/summary/${stadium.name}`,
                     )
                         .then((res) => {
-                            if (!res) throw new Error("Not found");
+                            if (!res.ok) throw new Error("Not found");
                             return res.json();
                         })
                         .then((data) => {
                             const wikiDiv =
                                 document.getElementById("ms_infoWindowWiki");
                             if (!wikiDiv) return;
+
+                            if (!data.extract || data.type !== "standard") {
+                                wikiDiv.innerHTML = "";
+                                return;
+                            }
+
                             wikiDiv.innerHTML = `
                                         <div class="ms_wikiSummary">
                                             <p>${data.extract}</p>
@@ -271,6 +277,12 @@ const Map = ({
                             const wikiDiv =
                                 document.getElementById("ms_infoWindowWiki");
                             if (!wikiDiv) return;
+
+                            if (!data.extract || data.type !== "standard") {
+                                wikiDiv.innerHTML = "";
+                                return;
+                            }
+
                             wikiDiv.innerHTML = `
                                         <div class="ms_wikiSummary">
                                             <p>${data.extract}</p>
