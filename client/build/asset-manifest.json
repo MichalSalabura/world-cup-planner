@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/D00282723/wc-planner/static/css/main.680d4f63.css",
-    "main.js": "/D00282723/wc-planner/static/js/main.0b48845c.js",
+    "main.js": "/D00282723/wc-planner/static/js/main.5ce2c5ee.js",
     "static/media/stadium-arena-svgrepo-com.svg": "/D00282723/wc-planner/static/media/stadium-arena-svgrepo-com.2ea14e99348175f5a84a83d0ce516e87.svg",
     "static/media/restaurant-cutlery-svgrepo-com.svg": "/D00282723/wc-planner/static/media/restaurant-cutlery-svgrepo-com.0c957d3f01c68a4fa0cafede4fa25690.svg",
     "index.html": "/D00282723/wc-planner/index.html",
     "static/media/hotel-left-side-bed-svgrepo-com.svg": "/D00282723/wc-planner/static/media/hotel-left-side-bed-svgrepo-com.14e22464a082d5e0c5c037846b2f7481.svg",
     "static/media/ticket-01-svgrepo-com.svg": "/D00282723/wc-planner/static/media/ticket-01-svgrepo-com.3248672a032e44c99dced3ee9e8c8c6f.svg",
     "main.680d4f63.css.map": "/D00282723/wc-planner/static/css/main.680d4f63.css.map",
-    "main.0b48845c.js.map": "/D00282723/wc-planner/static/js/main.0b48845c.js.map"
+    "main.5ce2c5ee.js.map": "/D00282723/wc-planner/static/js/main.5ce2c5ee.js.map"
   },
   "entrypoints": [
     "static/css/main.680d4f63.css",
-    "static/js/main.0b48845c.js"
+    "static/js/main.5ce2c5ee.js"
   ]
 }

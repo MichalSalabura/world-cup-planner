@@ -1,7 +1,7 @@
 {
     "name": "World Cup Planner",
     "short_name": "WC Planner",
-    "start_url": "./",
+    "start_url": "/D00282723/wc-planner",
     "display": "standalone",
     "description": "An app used to find attractions around Fifa World Cup venues",
     "background_color": "white",
